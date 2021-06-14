@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -21,6 +22,14 @@ public class ViewController implements Initializable {
     private String[] unidadesPeso = { "Kg", "g" };
 
     private List<Product> lista = new ArrayList<>();
+    private Integer contador = 0;
+    private Double total = 0.0;
+
+    @FXML
+    private Label lbContador;
+
+    @FXML
+    private Label lbCusto;
 
     @FXML
     private TextField txtNome;
@@ -92,14 +101,21 @@ public class ViewController implements Initializable {
             String nome = txtNome.getText();
             String tipoUnidade = cbTipo.getValue();
             String tipoComprado = cbTipoComprado.getValue();
-            Double quantidadeComprada = Double.parseDouble(txtQuantidadeComprada.getText());
+            
+            Double quantidadeComprada = Double.parseDouble(txtQuantidadeComprada.getText().replaceAll(",", "."));
             Double valorComprado = Double.parseDouble(txtPreco.getText());
             String tipoUsado = cbTipoUsado.getValue();
-            Double quantidadeUsada = Double.parseDouble(txtQuantidadeUsada.getText());
+            Double quantidadeUsada = Double.parseDouble(txtQuantidadeUsada.getText().replaceAll(",", "."));
 
             Product item = new Product(nome, tipoUnidade, tipoComprado, quantidadeComprada, valorComprado, tipoUsado,
                     quantidadeUsada);
+            total += item.geraCusto();
+
             lista.add(item);
+            contador++;
+            lbContador.setText(contador.toString());
+            lbCusto.setText("R$" + String.format("%.2f", total));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

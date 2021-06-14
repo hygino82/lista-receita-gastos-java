@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 public class Program extends Application {
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) {  
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/gui/View.fxml"));
             Scene scene = new Scene(parent);
